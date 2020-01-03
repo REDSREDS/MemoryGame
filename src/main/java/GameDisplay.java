@@ -1,17 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
-import java.awt.event.*;
+import java.util.ArrayList;
 
 public class GameDisplay {
 
-    static String word;
-    static Random r = new Random(100);
+    private static String word;
+    private static Random r = new Random();
+    private static int wordLength = 0;
     /**
     Create a display window
      */
     public static JFrame frame = new JFrame("MemoryGame");
-    public static JPanel welcome;
+    public static JPanel top;
     public static JPanel content;
     public static JPanel result;
     public static JLabel challenge;
@@ -32,15 +33,41 @@ public class GameDisplay {
      * add component
      */
     public static void addComponent() {
+
+//        Add top panel which include welcome, start and select difficulties
+        top = new JPanel(new BorderLayout());
+
 //        Add welcome panel which contains a start button
-        welcome = new JPanel();
+        JPanel welcome = new JPanel();
         welcome.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 20));
-        welcome.add(new JLabel("Welcome to the MemoryGame!"));
+        welcome.add(new JLabel("Type in letters flashed on the left in sequence"));
         JButton start = new JButton("start");
         welcome.add(start);
-        frame.add(welcome, BorderLayout.NORTH);
+        top.add(welcome, BorderLayout.NORTH);
         ButtonListener btnListener = new ButtonListener();
         start.addActionListener(btnListener);
+
+//        Add a panel to select difficulties
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(1, 5));
+        ArrayList<JButton> selectDifficulties = new ArrayList<JButton>();
+
+        selectDifficulties.add(new JButton("super easy"));
+        selectDifficulties.add(new JButton("easy"));
+        selectDifficulties.add(new JButton("normal"));
+        selectDifficulties.add(new JButton("hard"));
+        selectDifficulties.add(new JButton("super hard"));
+
+        DifficultyListener difListener = new DifficultyListener();
+
+        for(int i = 0; i < selectDifficulties.size(); i++) {
+            buttons.add(selectDifficulties.get(i));
+            selectDifficulties.get(i).addActionListener(difListener);
+        }
+        top.add(buttons, BorderLayout.CENTER);
+
+        frame.add(top, BorderLayout.NORTH);
 
 
 
@@ -65,7 +92,7 @@ public class GameDisplay {
 //        Bottom panel to display the result
         result = new JPanel();
         result.setBackground(new Color(0,255,0));
-        resultText = new JLabel("result");
+        resultText = new JLabel("Result");
         resultText.setFont(font);
         result.add(resultText);
         frame.add(result, BorderLayout.SOUTH);
@@ -75,7 +102,7 @@ public class GameDisplay {
     }
 
     public static void reset() {
-        frame.remove(welcome);
+        frame.remove(top);
         frame.remove(content);
         frame.remove(result);
         frame.repaint();
@@ -84,7 +111,7 @@ public class GameDisplay {
     }
 
     public static void flash() {
-        word = RandomString.generateString(r, 3);
+        word = RandomString.generateString(r, wordLength);
         challenge.setText("Go!");
         challenge.repaint();
         FlashSequence f = new FlashSequence();
@@ -102,6 +129,19 @@ public class GameDisplay {
 
     public static String getWord() {
         return word;
+    }
+
+    public static void setWordLength(int length) {
+        wordLength = length;
+    }
+
+    public static void reminder() {
+            resultText.setText("Choose Difficulty!!");
+            resultText.repaint();
+    }
+
+    public static int getWordLength() {
+        return wordLength;
     }
 
 

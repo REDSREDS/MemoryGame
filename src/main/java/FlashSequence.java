@@ -16,6 +16,7 @@ public class FlashSequence {
 
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            label.validate();
             label.repaint();
             label.setText(String.valueOf(test[n]));
             n++;
