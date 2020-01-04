@@ -11,9 +11,9 @@ number of characters:
 * hard: 10
 * super hard: 20
 
-![start](./imgs/start.png"start")
-![correct](./imgs/correct.png"correct")
-![wrong](./imgs/wrong.png"wrong")
+![start](https://github.com/REDSREDS/MemoryGame/blob/master/imgs/start.png "start")
+![correct](https://github.com/REDSREDS/MemoryGame/blob/master/imgs/correct.png "correct")
+![wrong](https://github.com/REDSREDS/MemoryGame/blob/master/imgs/wrong.png "wrong")
 ## How to play the game
 To run the game, you need to download it and then in this directory, type
 <pre>mvn install</pre>
